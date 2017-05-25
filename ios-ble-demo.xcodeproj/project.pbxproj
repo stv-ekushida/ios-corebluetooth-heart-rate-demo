@@ -13,6 +13,7 @@
 		BC92AFDC1ED56F4200028A97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC92AFDB1ED56F4200028A97 /* Assets.xcassets */; };
 		BC92AFDF1ED56F4200028A97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC92AFDD1ED56F4200028A97 /* LaunchScreen.storyboard */; };
 		BC92AFEA1ED56F4300028A97 /* ios_ble_demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92AFE91ED56F4300028A97 /* ios_ble_demoTests.swift */; };
+		BC92AFF51ED6596F00028A97 /* BLEHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC92AFF41ED6596F00028A97 /* BLEHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		BC92AFE51ED56F4300028A97 /* ios-ble-demoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-ble-demoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC92AFE91ED56F4300028A97 /* ios_ble_demoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_ble_demoTests.swift; sourceTree = "<group>"; };
 		BC92AFEB1ED56F4300028A97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC92AFF41ED6596F00028A97 /* BLEHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +61,9 @@
 		BC92AFC81ED56F4200028A97 = {
 			isa = PBXGroup;
 			children = (
+				BC92AFD21ED56F4200028A97 /* Products */,
 				BC92AFD31ED56F4200028A97 /* ios-ble-demo */,
 				BC92AFE81ED56F4300028A97 /* ios-ble-demoTests */,
-				BC92AFD21ED56F4200028A97 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,12 +79,12 @@
 		BC92AFD31ED56F4200028A97 /* ios-ble-demo */ = {
 			isa = PBXGroup;
 			children = (
+				BC92AFF61ED65AA400028A97 /* Controllers */,
+				BC92AFF71ED65AAF00028A97 /* Helpers */,
 				BC92AFD41ED56F4200028A97 /* AppDelegate.swift */,
-				BC92AFD61ED56F4200028A97 /* ViewController.swift */,
-				BC92AFD81ED56F4200028A97 /* Main.storyboard */,
 				BC92AFDB1ED56F4200028A97 /* Assets.xcassets */,
-				BC92AFDD1ED56F4200028A97 /* LaunchScreen.storyboard */,
 				BC92AFE01ED56F4200028A97 /* Info.plist */,
+				BC92AFDD1ED56F4200028A97 /* LaunchScreen.storyboard */,
 			);
 			path = "ios-ble-demo";
 			sourceTree = "<group>";
@@ -90,10 +92,29 @@
 		BC92AFE81ED56F4300028A97 /* ios-ble-demoTests */ = {
 			isa = PBXGroup;
 			children = (
-				BC92AFE91ED56F4300028A97 /* ios_ble_demoTests.swift */,
 				BC92AFEB1ED56F4300028A97 /* Info.plist */,
+				BC92AFE91ED56F4300028A97 /* ios_ble_demoTests.swift */,
 			);
 			path = "ios-ble-demoTests";
+			sourceTree = "<group>";
+		};
+		BC92AFF61ED65AA400028A97 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BC92AFD81ED56F4200028A97 /* Main.storyboard */,
+				BC92AFD61ED56F4200028A97 /* ViewController.swift */,
+			);
+			name = Controllers;
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		BC92AFF71ED65AAF00028A97 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BC92AFF41ED6596F00028A97 /* BLEHelper.swift */,
+			);
+			name = Helpers;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC92AFF51ED6596F00028A97 /* BLEHelper.swift in Sources */,
 				BC92AFD71ED56F4200028A97 /* ViewController.swift in Sources */,
 				BC92AFD51ED56F4200028A97 /* AppDelegate.swift in Sources */,
 			);
@@ -230,6 +252,7 @@
 				BC92AFD91ED56F4200028A97 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		BC92AFDD1ED56F4200028A97 /* LaunchScreen.storyboard */ = {
@@ -238,6 +261,7 @@
 				BC92AFDE1ED56F4200028A97 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

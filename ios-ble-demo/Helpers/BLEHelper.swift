@@ -1,44 +1,43 @@
 //
-//  ViewController.swift
+//  BLEHelper.swift
 //  ios-ble-demo
 //
-//  Created by Eiji Kushida on 2017/05/24.
+//  Created by Eiji Kushida on 2017/05/25.
 //  Copyright © 2017年 Eiji Kushida. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import CoreBluetooth
 
-//Central : 本アプリ
-//Peripheral : Light Blue
-final class ViewController: UIViewController {
+enum BLEState {
+    case success(data: Data)
+    case failure(message: String)
+}
 
-    //GATTサービス(Heart Rate) https://www.bluetooth.com/ja-jp/specifications/gatt/services
-    let kServiveUUIDHeartRate = "0x180D"
+protocol BLEDelegate: class {
+    func completion(state: BLEState)
+}
 
-    //Attribute Types (UUIDs)
-    let kCharacteristcUUIDHeartRateMeasurement = "0x2A37"
+final class BLEHelper: NSObject {
 
     var centralManager: CBCentralManager!
     var peripheral: CBPeripheral!
     var serviceUUID : CBUUID!
     var charcteristicUUID: CBUUID!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-    }
+    weak var delegate: BLEDelegate?
 
     /// セントラルマネージャー、UUIDの初期化
-    private func setup() {
+    func setup(serviveUUIDHeartRate: String,
+               characteristcUUIDHeartRateMeasurement: String) {
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        serviceUUID = CBUUID(string: kServiveUUIDHeartRate)
-        charcteristicUUID = CBUUID(string: kCharacteristcUUIDHeartRateMeasurement)
+        serviceUUID = CBUUID(string: serviveUUIDHeartRate)
+        charcteristicUUID = CBUUID(string: characteristcUUIDHeartRateMeasurement)
     }
 }
 
 //MARK : - CBCentralManagerDelegate
-extension ViewController: CBCentralManagerDelegate {
+extension BLEHelper: CBCentralManagerDelegate {
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         print(#function)
@@ -80,15 +79,15 @@ extension ViewController: CBCentralManagerDelegate {
 }
 
 //MARK : - CBPeripheralDelegate
-extension ViewController: CBPeripheralDelegate {
+extension BLEHelper: CBPeripheralDelegate {
 
     /// サービス発見時に呼ばれる
     func peripheral(_ peripheral: CBPeripheral,
                     didDiscoverServices error: Error?) {
         print(#function)
 
-        if error != nil {
-            print(error.debugDescription)
+        if let error = error {
+            delegate?.completion(state: .failure(message: (error.localizedDescription)))
             return
         }
 
@@ -103,8 +102,8 @@ extension ViewController: CBPeripheralDelegate {
                     error: Error?) {
         print(#function)
 
-        if error != nil {
-            print(error.debugDescription)
+        if let error = error {
+            delegate?.completion(state: .failure(message: (error.localizedDescription)))
             return
         }
 
@@ -118,26 +117,11 @@ extension ViewController: CBPeripheralDelegate {
                     error: Error?) {
         print(#function)
 
-        if error != nil {
-            print(error.debugDescription)
+        if let error = error {
+            delegate?.completion(state: .failure(message: (error.localizedDescription)))
             return
         }
 
-        updateWithData(data: characteristic.value!)
-    }
-
-    private func updateWithData(data : Data) {
-        print(#function)
-
-        let reportData = data.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: data.count))
-        }
-
-        if (reportData.first != nil) && 0x01 == 0 {
-            print("BPM1: \(reportData.last!)")
-        } else {
-            print("BPM2 : \(CFSwapInt16LittleToHost(UInt16(reportData.last!)))")
-        }
+        delegate?.completion(state: .success(data: characteristic.value!))
     }
 }
-
